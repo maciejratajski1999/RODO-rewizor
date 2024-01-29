@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "RODO Rewizor",
+  "version": "1.0",
+
+  "description": "Aplikacja wspomagająca audyt RODO strony internetowej",
+
+  "icons": {
+    "48": "icons/rewizor-48.png",
+    "96": "icons/rewizor-96.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/rewizor-32.png",
+    "default_title": "Rewizor",
+    "default_popup": "popup.html",
+    "browser_style": true
+  },
+  "permissions": ["<all_urls>", "tabs", "cookies"]
+}
