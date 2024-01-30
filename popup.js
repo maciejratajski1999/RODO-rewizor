@@ -1,5 +1,6 @@
 browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
     let tab = tabs[0];
+    // wyciągamy z danych przeglądarki ciasteczka aktywnej strony internetowej
     browser.cookies.getAll({url: tab.url}).then((cookies) => {
         let cookiesTable = document.getElementById('cookies');
         for (let cookie of cookies) {
@@ -16,7 +17,7 @@ browser.tabs.query({currentWindow: true, active: true}).then((tabs) => {
 
 var button = document.getElementById('exportButton');
 
-button.addEventListener('click', function() {
+button.addEventListener('click', function () {
     var csv = 'Name,Value,Domain\n';
     var rows = document.getElementById('cookies').rows;
     for (var i = 1; i < rows.length; i++) { // pomiń linijkę nagłówkową csv
@@ -24,12 +25,30 @@ button.addEventListener('click', function() {
         csv += rows[i].cells[1].textContent + ','; // value
         csv += rows[i].cells[2].textContent + '\n'; // domain
     }
-    var blob = new Blob([csv], { type: 'text/csv' });
+    var blob = new Blob([csv], {type: 'text/csv'});
     var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = rows[1].cells[2].textContent + '_cookies.csv'; // nazwa pliku to domena_cookies.csv
     link.click(); // pobierz plik
+
+    // od procesu w tle (main.js) pobieramy informacje o znalezionych otwartych adresach API
+    browser.runtime.sendMessage("getAPIdata").then((apiData) => {
+        var routes = apiData.routes;
+        var csv = 'URL\n';
+        for (let key in routes) {
+            if (!key.includes("?")) { // ignoruj api proszące o dodatkowe argumenty http "?arg=____"
+                csv += rows[1].cells[2].textContent + '/wp-json' + key + '\n';
+            }
+        }
+        var blob = new Blob([csv], {type: 'text/csv'});
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = rows[1].cells[2].textContent + '_api.csv'; // domena_api.csv';
+        link.click();
+    });
 });
+
+// od procesu w tle (main.js) pobieramy informacje o adresach na które wykonanano requesty HTTP
 browser.runtime.sendMessage("getRequests").then((requestURLs) => {
     var table = document.getElementById('requests');
     for (let url of requestURLs) {
@@ -38,4 +57,3 @@ browser.runtime.sendMessage("getRequests").then((requestURLs) => {
         cell.textContent = url;
     }
 });
-

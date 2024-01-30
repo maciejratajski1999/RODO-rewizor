@@ -1,18 +1,30 @@
-th, td{
+th, td {
     max-width: 250px;
     overflow: hidden;
     word-wrap: break-word;
 
-  }
+}
 
-  table {
+table {
     border: 1px solid black;
     border-spacing: 10px;
-  }
-  
-  button {
+}
+
+button {
     width: 90px;
-    height: 20px;
+    height: auto;
     border: none;
-    background-color: lightgray;
-  }
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
