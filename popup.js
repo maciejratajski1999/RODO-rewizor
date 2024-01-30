@@ -48,12 +48,19 @@ button.addEventListener('click', function () {
     });
 });
 
-// od procesu w tle (main.js) pobieramy informacje o adresach na które wykonanano requesty HTTP
-browser.runtime.sendMessage("getRequests").then((requestURLs) => {
-    var table = document.getElementById('requests');
-    for (let url of requestURLs) {
-        let row = table.insertRow(-1);
-        let cell = row.insertCell(0);
-        cell.textContent = url;
-    }
-});
+// powtarzaj co jakąś ilość czasu
+setInterval(function() {
+    // Od procesu w tle (main.js) pobieramy informacje o adresach na które wykonano requesty HTTP
+    browser.runtime.sendMessage("getRequests").then((requestURLs) => {
+        var table = document.getElementById('requests');
+        // Czyść tabelę przed dodaniem nowych danych
+        while(table.rows.length > 1) {
+            table.deleteRow(1);
+        }
+        for (let url of requestURLs) {
+            let row = table.insertRow(-1);
+            let cell = row.insertCell(0);
+            cell.textContent = url;
+        }
+    });
+}, 1000); // w milisekundach
