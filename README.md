@@ -40,3 +40,6 @@ Aby zainstalować wtyczkę w przeglądarce Firefox, należy pobrać wszytkie pli
 Po zainstalowaniu i uruchomieniu wtyczki w przeglądarce Firefox, wejdź na stronę, którą chcesz zbadać i kliknij w ikonę wtyczki, any otworzyć okienko popup.
 Przycisk `Eksportuj do CSV` służy do generowania raportów o aktywnych na stronie plikach cookies oraz otwartych API, jeśli witryna stoi na Wordpressie.
 Do tego użytkownik ma w czasie rzeczywistym podgląd na zapytania HTTP wysyłane przez stronę.
+
+### Uwaga!!!
+### W celu uniknięcia błędów, w przeglądarce miej otwartą tylko jedną kartę!
