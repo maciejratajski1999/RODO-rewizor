@@ -30,3 +30,12 @@ button.addEventListener('click', function() {
     link.download = rows[1].cells[2].textContent + '_cookies.csv'; // nazwa pliku to domena_cookies.csv
     link.click(); // pobierz plik
 });
+browser.runtime.sendMessage("getRequests").then((requestURLs) => {
+    var table = document.getElementById('requests');
+    for (let url of requestURLs) {
+        let row = table.insertRow(-1);
+        let cell = row.insertCell(0);
+        cell.textContent = url;
+    }
+});
+
