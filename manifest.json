@@ -15,5 +15,11 @@
     "default_popup": "popup.html",
     "browser_style": true
   },
-  "permissions": ["<all_urls>", "tabs", "cookies"]
+  "permissions": ["<all_urls>", "tabs", "cookies"],
+  "content_scripts": [
+    {
+        "matches": ["<all_urls>"],
+        "js": ["popup.js"]
+    }
+]
 }

@@ -1,14 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl-PL">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <script src="popup.js" defer></script>
+    </head>
     <body>
     <h1 id="head">Ciasteczka strony</h1>
+    <button id="exportButton" >Export to CSV</button>
     <table id="cookies">
         <tr>
-            <th>Nazwa</th>
-            <th>Wartość</th>
-            <th>URL</th>
-        </tr>
+            <td>Nazwa</td>
+            <td>Wartość</td>
+            <td>URL</td>
     </table>
-    <script src="popup.js"></script>
+    <script>
+        document.getElementById('cookies').addEventListener('click', function() {
+            var table = document.getElementById('cookies');
+            var csv = tableToCSV(table);
+            downloadCSV(csv, 'exported_data.csv');
+        });
+
+        function tableToCSV(table) {
+            var csv = [];
+            var rows = table.querySelectorAll('tr');
+            
+            for (var i = 0; i < rows.length; i++) {
+                var row = [];
+                var cols = rows[i].querySelectorAll('td, th');
+                
+                for (var j = 0; j < cols.length; j++) {
+                    row.push(cols[j].innerText);
+                }
+                
+                csv.push(row.join(','));
+            }
+            
+            return csv.join('\n');
+        }
+
+        function downloadCSV(csv, filename) {
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            var link = document.createElement('a');
+            
+            if (link.download !== undefined) {
+                var url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
     </body>
 </html>

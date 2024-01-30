@@ -1,0 +1,18 @@
+th, td{
+    max-width: 250px;
+    overflow: hidden;
+    word-wrap: break-word;
+
+  }
+
+  table {
+    border: 1px solid black;
+    border-spacing: 10px;
+  }
+  
+  button {
+    width: 90px;
+    height: 20px;
+    border: none;
+    background-color: lightgray;
+  }
